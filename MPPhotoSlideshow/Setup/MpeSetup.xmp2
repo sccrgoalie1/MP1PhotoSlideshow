@@ -187,23 +187,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     </Items>
   </Dependencies>
   <PluginDependencies>
-    <Items>
-      <PluginDependencyItem AssemblyName="MPPhotoSlideshow.dll">
-        <CompatibleVersion>
-          <Items>
-            <CompatibleVersionItem>
-              <MinRequiredVersion>1.1.6.27644</MinRequiredVersion>
-              <DesignedForVersion>1.1.6.27644</DesignedForVersion>
-            </CompatibleVersionItem>
-          </Items>
-        </CompatibleVersion>
-        <SubSystemsUsed>
-          <Items>
-            <SubSystemItem Name="MP.Config" />
-          </Items>
-        </SubSystemsUsed>
-      </PluginDependencyItem>
-    </Items>
+    <Items />
   </PluginDependencies>
   <GeneralInfo>
     <Name>MPPhotoSlideshow</Name>
@@ -216,7 +200,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
       <Major>1</Major>
       <Minor>0</Minor>
       <Build>0</Build>
-      <Revision>3</Revision>
+      <Revision>4</Revision>
     </Version>
     <ExtensionDescription>Display all your photos in fun templates</ExtensionDescription>
     <VersionDescription />

@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\dev\MP_1_PhotoSlideshow\MPPhotoSlideshowCommon\obj\Debug\
+C:\dev\MP1PhotoSlideshow\MPPhotoSlideshowCommon\obj\Debug\
 MPPhotoSlideshowCommon
 none
 false
@@ -13,8 +13,8 @@ DEBUG;TRACE
 421447185
 
 32-981126280
-16236517333
+161660572518
 TemplateBuilder.xaml;WindowResources\SizeChrome.xaml;WindowResources\ResizeRotateChrome.xaml;WindowResources\DesignerItem.xaml;
 
-False
+True
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.IO;
@@ -45,9 +46,11 @@ namespace MPPhotoSlideshowCommon
         ///<param name="maxsize">The maximum size (in bytes) the log can become before creating a new log</param>
         public static void Init(string directory, string filename, string extension, LogType type, bool append, long maxsize)
         {
+          try
+          {
             if (!Directory.Exists(directory))
             {
-                Directory.CreateDirectory(directory);
+              Directory.CreateDirectory(directory);
             }
             DirectoryPath = directory;
             FileName = filename;
@@ -56,6 +59,13 @@ namespace MPPhotoSlideshowCommon
             AppendLog = append;
             MaxLogSize = maxsize;
             FullPath = String.Format(@"{0}\{1}.{2}", DirectoryPath, FileName, Extension);
+          }
+          catch (Exception)
+          {
+            
+            throw;
+          }
+           
         }
         ///<summary>
         ///A simple class for logging based on the info received
@@ -66,9 +76,11 @@ namespace MPPhotoSlideshowCommon
         ///<param name="type">The type of logging that should be written</param>
         public static void Init(string directory, string filename, string extension, LogType type)
         {
+          try
+          {
             if (!Directory.Exists(directory))
             {
-                Directory.CreateDirectory(directory);
+              Directory.CreateDirectory(directory);
             }
             DirectoryPath = directory;
             FileName = filename;
@@ -77,6 +89,13 @@ namespace MPPhotoSlideshowCommon
             AppendLog = true;
             MaxLogSize = 5242880; //5MB
             FullPath = String.Format(@"{0}\{1}.{2}", DirectoryPath, FileName, Extension);
+          }
+          catch (Exception)
+          {
+            
+            throw;
+          }
+           
         }
         ///<summary>
         ///Writes to the log, if the file size has grown to large it will rename the log with a date stamp
@@ -85,16 +104,24 @@ namespace MPPhotoSlideshowCommon
         ///<param name="arg">The args of information that is being sent</param>
         public static void Debug(string format, params object[] arg)
         {
-          if (format != null)
+          try
           {
-            if (logType == LogType.Debug)
+            if (format != null)
             {
-              checkFileSize();
-              using (StreamWriter streamWriter = new StreamWriter(FullPath, AppendLog))
+              if (logType == LogType.Debug)
               {
-                streamWriter.WriteLine(DateTime.Now.ToString() + "   DEBUG         " + String.Format(format, arg));
+                checkFileSize();
+                using (StreamWriter streamWriter = new StreamWriter(FullPath, AppendLog))
+                {
+                  streamWriter.WriteLine(DateTime.Now.ToString() + "   DEBUG         " + String.Format(format, arg));
+                }
               }
             }
+
+          }
+          catch (Exception)
+          {
+            throw;
           }
         }
         ///<summary>
@@ -104,27 +131,52 @@ namespace MPPhotoSlideshowCommon
         ///<param name="arg">The args of information that is being sent</param>
         public static void Error(string format, params object[] arg)
         {
-          if (format != null)
+          try
           {
-            checkFileSize();
-            using (StreamWriter streamWriter = new StreamWriter(FullPath, AppendLog))
+            if (format != null)
             {
-              streamWriter.WriteLine(DateTime.Now.ToString() + "   ERROR         " + String.Format(format, arg));
+              checkFileSize();
+              using (StreamWriter streamWriter = new StreamWriter(FullPath, AppendLog))
+              {
+                streamWriter.WriteLine(DateTime.Now.ToString() + "   ERROR         " + String.Format(format, arg));
+              }
             }
           }
+          catch (Exception)
+          {
+            
+            throw;
+          }
+         
         }
         private static void checkFileSize()
         {
-          if (File.Exists(FullPath))
+          try
           {
-            FileInfo logInfo = new FileInfo(FullPath);
-            if (logInfo.Length > MaxLogSize)
+            if (File.Exists(FullPath))
             {
-              string changeName = String.Format(@"{0}\{1}{2}.{3}", DirectoryPath, FileName, Guid.NewGuid().ToString(), Extension);
-              File.Copy(FullPath, changeName);
-              File.Delete(FullPath);
+              FileInfo logInfo = new FileInfo(FullPath);
+              if (logInfo.Length > MaxLogSize)
+              {
+                int i = 1;
+                string changeName = String.Format(@"{0}\{1}{2}.{3}", DirectoryPath, FileName, i, Extension);
+                while (File.Exists(changeName))
+                {
+                  changeName = String.Format(@"{0}\{1}{2}.{3}", DirectoryPath, FileName, i, Extension);
+                  i++;
+                }
+
+                File.Copy(FullPath, changeName);
+                File.Delete(FullPath);
+              }
             }
           }
+          catch (Exception)
+          {
+            
+            throw;
+          }
+          
         }
     }
   
